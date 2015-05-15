@@ -1,4 +1,13 @@
+"""
+python-jproperties
+Java .properties file parsing and handling
+"""
 from collections import OrderedDict
+
+
+__version__ = "0.1"
+__author__ = "Jerome Leclanche"
+__email__ = "jerome@leclan.ch"
 
 
 class EmptyNode:
