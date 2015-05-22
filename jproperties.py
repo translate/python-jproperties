@@ -59,11 +59,17 @@ class Properties(object):
 
 	@staticmethod
 	def escape(value):
-		return value.replace(":", r"\:").replace("=", "\=")
+		return value.encode("unicode_escape") \
+			.decode("utf-8") \
+			.replace(":", r"\:") \
+			.replace("=", "\=")
 
 	@staticmethod
 	def unescape(value):
-		return value.replace(r"\:", ":").replace(r"\=", "=")
+		return value.encode("utf-8") \
+			.decode("unicode_escape") \
+			.replace(r"\:", ":") \
+			.replace(r"\=", "=")
 
 	@staticmethod
 	def _get_lines(stream):
