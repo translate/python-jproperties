@@ -53,7 +53,7 @@ class Properties(object):
 			elif isinstance(node, EmptyNode):
 				ret.append("")
 			else:
-				ret.append(self.escape(node.key) + node.separator + self.escape(node.value))
+				ret.append(self.escape_key(node.key) + node.separator + self.escape(node.value))
 		return "\n".join(ret)
 
 	def __getitem__(self, name):
@@ -67,10 +67,15 @@ class Properties(object):
 
 	@staticmethod
 	def escape(value):
+		return value.encode("unicode_escape").decode("utf-8")
+
+	@staticmethod
+	def escape_key(value):
 		return value.encode("unicode_escape") \
 			.decode("utf-8") \
 			.replace(":", r"\:") \
-			.replace("=", "\=")
+			.replace("=", r"\=") \
+			.replace(" ", r"\ ")
 
 	@staticmethod
 	def unescape(value):
