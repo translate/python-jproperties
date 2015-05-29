@@ -79,10 +79,31 @@ class Properties(object):
 
 	@staticmethod
 	def unescape(value):
-		return value.encode("utf-8") \
-			.decode("unicode_escape") \
-			.replace(r"\:", ":") \
-			.replace(r"\=", "=")
+		ret = []
+		backslash = False
+		for c in value:
+			if backslash:
+				if c == "u":
+					# fall through to native unicode_escape
+					ret.append(r"\u")
+				elif c == "t":
+					ret.append("\t")
+				elif c == "r":
+					ret.append("\r")
+				elif c == "n":
+					ret.append("\n")
+				elif c == "f":
+					ret.append("\f")
+				else:
+					ret.append(c)
+				backslash = False
+			elif c == "\\":
+				backslash = True
+			else:
+				ret.append(c)
+
+		ret = "".join(ret).encode("utf-8").decode("unicode_escape")
+		return ret
 
 	@staticmethod
 	def _get_lines(stream):
