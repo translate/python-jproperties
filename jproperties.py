@@ -15,8 +15,16 @@ class EmptyNode:
 		return "<EmptyNode>"
 
 
-class Comment(str):
-	pass
+class Comment:
+	def __init__(self, value, sigil="#"):
+		self.value = value
+		self.sigil = sigil
+
+	def __str__(self):
+		return "\n".join("%s %s" % (self.sigil, line) for line in self.value.split("\n"))
+
+	def __repr__(self):
+		return "<Comment: %r>" % (str(self))
 
 
 class Property:
@@ -41,7 +49,7 @@ class Properties(object):
 		ret = []
 		for node in self.nodes:
 			if isinstance(node, Comment):
-				ret.append("\n".join("# " + line for line in node.strip().split("\n")))
+				ret.append(str(node))
 			elif isinstance(node, EmptyNode):
 				ret.append("")
 			else:
@@ -151,7 +159,7 @@ class Properties(object):
 		return self._props.items()
 
 	def load(self, stream):
-		comment = ""
+		comment = []
 		for line in self._get_lines(stream):
 			# Skip null lines
 			if not line:
@@ -159,11 +167,14 @@ class Properties(object):
 				continue
 
 			if line.startswith(("#", "!")):
-				comment += line[1:].strip() + "\n"
+				# NOTE: Multiline comments with different sigils will be normalized on the
+				# last specified sigil
+				sigil = line[0]
+				comment.append(line[1:].strip())
 				continue
 			elif comment:
-				self.nodes.append(Comment(comment))
-				comment = ""
+				self.nodes.append(Comment("\n".join(comment), sigil))
+				comment = []
 
 			key, separator, value = self._separate(line)
 			key = self.unescape(key)
