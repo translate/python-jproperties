@@ -19,6 +19,16 @@ def test_eq_separator():
 		("a =b", [("a", "b")]),
 	)
 
+
+def test_escaped_whitespace():
+	_test_deserialize(
+		(r"a = \f", [("a", "\f")]),
+		(r"a = \n", [("a", "\n")]),
+		(r"a = \r", [("a", "\r")]),
+		(r"a = \t", [("a", "\t")]),
+	)
+
+
 def test_colon_separator():
 	_test_deserialize(
 		("a:b", [("a", "b")]),
