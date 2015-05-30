@@ -33,6 +33,7 @@ def test_space_separator():
 		("a b", [("a", "b")]),
 		("a  b", [("a", "b")]),
 		("a        b", [("a", "b")]),
+		("a\tb", [("a", "b")]),  # Tab is also a valid separator
 	)
 
 

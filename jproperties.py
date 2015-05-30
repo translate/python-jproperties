@@ -143,7 +143,7 @@ class Properties(object):
 			escaping = False
 			for c in s:
 				if not escaping:
-					if c in " :=":
+					if c in " \t:=":
 						return "".join(ret)
 					elif c == "\\":
 						escaping = True
@@ -156,7 +156,7 @@ class Properties(object):
 		def getseparator(s):
 			ret = []
 			for c in s:
-				if c not in " :=":
+				if c not in " \t:=":
 					return "".join(ret)
 				ret.append(c)
 			return "".join(ret)
