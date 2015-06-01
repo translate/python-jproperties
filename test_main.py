@@ -29,6 +29,13 @@ def test_escaped_whitespace():
 	)
 
 
+def test_empty_value():
+	_test_deserialize(
+		("a = ", [("a", "")]),
+		("a : ", [("a", "")]),
+	)
+
+
 def test_colon_separator():
 	_test_deserialize(
 		("a:b", [("a", "b")]),
@@ -46,6 +53,13 @@ def test_space_separator():
 		("a\tb", [("a", "b")]),  # Tab is also a valid separator
 	)
 
+
+def test_separator_in_key():
+	_test_deserialize(
+		(r"key\:with\:colons : b", [("key:with:colons", "b")]),
+		(r"key\=with\=equals = b", [("key=with=equals", "b")]),
+		(r"key\twith\ttabs b", [("key\twith\ttabs", "b")]),
+	)
 
 def test_space_in_key():
 	_test_deserialize(
