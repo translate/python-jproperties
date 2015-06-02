@@ -45,6 +45,21 @@ def test_colon_separator():
 	)
 
 
+fruits = r"""
+fruits                           apple, banana, pear, \
+                                 cantaloupe, watermelon, \
+                                 kiwi, mango
+""".strip()
+fruits_values = "apple, banana, pear, cantaloupe, watermelon, kiwi, mango"
+def test_java_examples():
+	_test_deserialize(
+		("Truth = Beauty", [("Truth", "Beauty")]),
+		(" Truth:Beauty", [("Truth", "Beauty")]),
+		("Truth                    :Beauty", [("Truth", "Beauty")]),
+		(fruits, [("fruits", fruits_values)]),
+		("cheeses", [("cheeses", "")]),
+	)
+
 def test_space_separator():
 	_test_deserialize(
 		("a b", [("a", "b")]),
