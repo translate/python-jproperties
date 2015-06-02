@@ -124,7 +124,7 @@ class Properties(object):
 		cont = False
 		for line in stream.readlines():
 			if line.endswith("\\\n") and not line.endswith("\\\\\n"):
-				buf.append(line[:-2])
+				buf.append(line[:-2].lstrip())
 				cont = True
 				continue
 			elif cont:
