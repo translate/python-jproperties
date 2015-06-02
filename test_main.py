@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import sys
+from collections import OrderedDict
 from io import StringIO
 from jproperties import Properties
 
@@ -11,12 +12,22 @@ def _test_deserialize(*data):
 		assert list(props.items()) == items
 
 
+def _test_serialize(*data):
+	for items, s in data:
+		d = OrderedDict(items)
+		props = Properties(d)
+		assert list(props.items()) == items
+
+
 def test_eq_separator():
 	_test_deserialize(
 		("a=b", [("a", "b")]),
 		("a= b", [("a", "b")]),
 		("a = b", [("a", "b")]),
 		("a =b", [("a", "b")]),
+	)
+	_test_serialize(
+		([("a", "b")], "a = b"),
 	)
 
 
@@ -27,12 +38,21 @@ def test_escaped_whitespace():
 		(r"a = \r", [("a", "\r")]),
 		(r"a = \t", [("a", "\t")]),
 	)
+	_test_serialize(
+		([("a", "\f")], r"a = \f"),
+		([("a", "\n")], r"a = \n"),
+		([("a", "\r")], r"a = \r"),
+		([("a", "\t")], r"a = \t"),
+	)
 
 
 def test_empty_value():
 	_test_deserialize(
 		("a = ", [("a", "")]),
 		("a : ", [("a", "")]),
+	)
+	_test_serialize(
+		([("a", "")], "a = "),
 	)
 
 
@@ -85,6 +105,12 @@ def test_separator_in_key():
 		(r"key\:with\:colons : b", [("key:with:colons", "b")]),
 		(r"key\=with\=equals = b", [("key=with=equals", "b")]),
 		(r"key\twith\ttabs b", [("key\twith\ttabs", "b")]),
+	)
+	_test_serialize(
+		([("key:with:colons", "b")], r"key\:with\:colons = b"),
+		([("key=with=equals", "b")], r"key\=with\=equals = b"),
+		([("key with spaces", "b")], r"key\ with\ spaces = b"),
+		([("key\twith\ttabs", "b")], r"key\twith\ttabs = b"),
 	)
 
 def test_space_in_key():
