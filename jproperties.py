@@ -144,14 +144,14 @@ class Properties(object):
 			for c in s:
 				if not escaping:
 					if c in " \t:=":
-						return "".join(ret)
+						break
 					elif c == "\\":
 						escaping = True
 				else:
 					escaping = False
 
 				ret.append(c)
-			raise SyntaxError(repr(s))
+			return "".join(ret)
 
 		def getseparator(s):
 			ret = []
