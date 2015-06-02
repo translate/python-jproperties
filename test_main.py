@@ -45,6 +45,16 @@ def test_colon_separator():
 	)
 
 
+def test_dropped_escapes():
+	_test_deserialize(
+		(r"a : http://example.org/?foo=bar", [("a", "http://example.org/?foo=bar")]),
+		(r"a = http\://example.org/?foo\=bar", [("a", "http://example.org/?foo=bar")]),
+		(r"\b = \z", [("b", "z")]),
+		(r"a = \'single quotes'", [("a", "'single quotes'")]),
+		(r'a = \"double quotes"', [("a", '"double quotes"')]),
+	)
+
+
 fruits = r"""
 fruits                           apple, banana, pear, \
                                  cantaloupe, watermelon, \
@@ -59,6 +69,7 @@ def test_java_examples():
 		(fruits, [("fruits", fruits_values)]),
 		("cheeses", [("cheeses", "")]),
 	)
+
 
 def test_space_separator():
 	_test_deserialize(
