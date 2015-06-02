@@ -1,5 +1,6 @@
 python-jproperties
 ==================
+[![Build Status](https://travis-ci.org/translate/python-jproperties.svg)](https://travis-ci.org/translate/python-jproperties)
 
 A python library for parsing and handling Java .properties files.
 
