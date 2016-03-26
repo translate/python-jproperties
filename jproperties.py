@@ -56,13 +56,18 @@ class Properties(object):
 				ret.append(self.escape_key(node.key) + node.separator + self.escape(node.value))
 		return "\n".join(ret)
 
-	def __getitem__(self, name):
+	def __getitem__(self, key):
 		return self._props.get(key, "")
 	getProperty = __getitem__
 
 	def __setitem__(self, key, value):
 		self._props[key] = value
-		self.nodes.append(Property(key, value))
+		for node in self.nodes:
+			if isinstance(node, Property) and node.key == key:
+				self.nodes[self.nodes.index(node)] = Property(key, value)
+				break
+		else:
+			self.nodes.append(Property(key, value))
 	setProperty = __setitem__
 
 	@staticmethod

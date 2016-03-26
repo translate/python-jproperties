@@ -113,6 +113,7 @@ def test_separator_in_key():
 		([("key\twith\ttabs", "b")], r"key\twith\ttabs = b"),
 	)
 
+
 def test_space_in_key():
 	_test_deserialize(
 		("key\ with\ spaces = b", [("key with spaces", "b")]),
@@ -120,6 +121,14 @@ def test_space_in_key():
 		("key\ with\ spaces : b", [("key with spaces", "b")]),
 		("key\ with\ spaces\ : b", [("key with spaces ", "b")]),
 	)
+
+
+def test_property_node_update():
+	s = "key = value"
+	props = Properties()
+	props.load(StringIO(s))
+	props["key"] = "another_value"
+	assert str(props) == "key = another_value"
 
 
 def main():
