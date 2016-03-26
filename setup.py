@@ -16,6 +16,7 @@ CLASSIFIERS = [
 	"Programming Language :: Python :: 3",
 	"Programming Language :: Python :: 3.3",
 	"Programming Language :: Python :: 3.4",
+	"Programming Language :: Python :: 3.5",
 	"Topic :: Software Development :: Internationalization",
 	"Topic :: Software Development :: Libraries",
 	"Topic :: Software Development :: Libraries :: Java Libraries",
