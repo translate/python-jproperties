@@ -131,6 +131,17 @@ def test_property_node_update():
 	assert str(props) == "key = another_value"
 
 
+def test_iterable_properties():
+	items = [
+		("a", "b"),
+		("c", "d"),
+		("e", "f")
+	]
+	d = OrderedDict(items)
+	props = Properties(d)
+	assert [key for key in props] == list(d.keys())
+
+
 def main():
 	for name, f in globals().items():
 		if name.startswith("test_") and callable(f):

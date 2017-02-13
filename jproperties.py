@@ -70,6 +70,10 @@ class Properties(object):
 			self.nodes.append(Property(key, value))
 	setProperty = __setitem__
 
+	def __iter__(self):
+		for key in self._props.keys():
+			yield key
+
 	@staticmethod
 	def escape(value):
 		return value.encode("unicode_escape").decode("utf-8")
