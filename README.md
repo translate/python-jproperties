@@ -72,3 +72,9 @@ you can create a new Properties object from an existing one's keys:
 ```python
 p3 = Properties(p2.keys())
 ```
+
+
+### License
+
+This project is licensed under the MIT license. The full license text is
+available in the LICENSE file.
