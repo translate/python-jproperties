@@ -28,7 +28,9 @@ class Comment:
 
 
 class Property:
-	def __init__(self, key, value, separator=" = "):
+	DEFAULT_SEPARATOR = " = "
+
+	def __init__(self, key, value, separator=DEFAULT_SEPARATOR):
 		self.key = key
 		self.value = value
 		self.separator = separator
