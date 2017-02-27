@@ -32,6 +32,8 @@ distutils.core.setup(
 	description="Python library for Java .properties file parsing",
 	download_url="https://github.com/translate/python-jproperties/tarball/master",
 	long_description=README,
+	setup_requires=['pytest-runner'],
+	tests_require=['pytest'],
 	url="https://github.com/translate/python-jproperties",
 	version=jproperties.__version__,
 )

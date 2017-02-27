@@ -4,6 +4,7 @@ from io import StringIO
 import os
 from tempfile import NamedTemporaryFile
 
+import pytest
 from jproperties import Properties
 
 
@@ -268,11 +269,5 @@ def test_newline_at_EOF():
 	assert lastline.endswith("\n")
 
 
-def main():
-	for name, f in globals().items():
-		if name.startswith("test_") and callable(f):
-			f()
-
-
 if __name__ == "__main__":
-	main()
+	pytest.main()
