@@ -24,14 +24,14 @@ CLASSIFIERS = [
 ]
 
 distutils.core.setup(
-	name = "jproperties",
-	py_modules = ["jproperties"],
-	author = jproperties.__author__,
-	author_email = jproperties.__email__,
-	classifiers = CLASSIFIERS,
-	description = "Python library for Java .properties file parsing",
-	download_url = "https://github.com/translate/python-jproperties/tarball/master",
-	long_description = README,
-	url = "https://github.com/translate/python-jproperties",
-	version = jproperties.__version__,
+	name="jproperties",
+	py_modules=["jproperties"],
+	author=jproperties.__author__,
+	author_email=jproperties.__email__,
+	classifiers=CLASSIFIERS,
+	description="Python library for Java .properties file parsing",
+	download_url="https://github.com/translate/python-jproperties/tarball/master",
+	long_description=README,
+	url="https://github.com/translate/python-jproperties",
+	version=jproperties.__version__,
 )
