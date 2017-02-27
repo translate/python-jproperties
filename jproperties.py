@@ -229,6 +229,10 @@ class Properties(MutableMapping):
 			node = Property(key, value, separator)
 			self.nodes.append(node)
 
+	def save(self, path):
+		with open(path, 'w') as f:
+			f.write(str(self))
+
 	def propertyNames(self):
 		# Java compat
 		return self._props.keys()

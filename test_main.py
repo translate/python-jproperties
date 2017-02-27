@@ -1,7 +1,9 @@
 #!/usr/bin/env python
-import sys
 from collections import OrderedDict
 from io import StringIO
+import os
+from tempfile import NamedTemporaryFile
+
 from jproperties import Properties
 
 
@@ -233,6 +235,22 @@ def test_str():
 	props2 = Properties()
 	props2.load(StringIO(str(props)))
 	assert props == props2
+
+
+def test_save():
+	properties = """
+foo : bar
+bar : baz
+"""
+	p = Properties()
+	p2 = Properties()
+	p.load(StringIO(properties))
+	with NamedTemporaryFile(delete=False) as f:
+		p.save(f.name)
+	with open(f.name) as f:
+		p2.load(f)
+	os.remove(f.name)
+	assert p == p2
 
 
 def main():
