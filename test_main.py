@@ -253,6 +253,21 @@ bar : baz
 	assert p == p2
 
 
+def test_newline_at_EOF():
+	"""http://stackoverflow.com/a/729795"""
+	f = NamedTemporaryFile(delete=False)
+	prop = Properties(OrderedDict([
+		('a', 'b'),
+		('c', 'd'),
+		('e', 'f')
+	]))
+	prop.save(f.name)
+	with open(f.name) as f:
+		lastline = f.readlines()[-1]
+	os.remove(f.name)
+	assert lastline.endswith("\n")
+
+
 def main():
 	for name, f in globals().items():
 		if name.startswith("test_") and callable(f):

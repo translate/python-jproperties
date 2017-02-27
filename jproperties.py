@@ -231,7 +231,7 @@ class Properties(MutableMapping):
 
 	def save(self, path):
 		with open(path, 'w') as f:
-			f.write(str(self))
+			f.write(str(self) + "\n")
 
 	def propertyNames(self):
 		# Java compat
