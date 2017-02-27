@@ -46,7 +46,7 @@ class Properties(MutableMapping):
 			self._props = defaults.copy()
 		else:
 			self._props = OrderedDict()
-		self.nodes = []
+		self.nodes = [Property(k, v) for k, v in self._props.items()]
 
 	def __str__(self):
 		ret = []

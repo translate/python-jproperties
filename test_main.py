@@ -222,6 +222,19 @@ def test_delete():
 	]))
 
 
+def test_str():
+	items = [
+		("a", "b"),
+		("c", "d"),
+		("e", "f")
+	]
+	d = OrderedDict(items)
+	props = Properties(d)
+	props2 = Properties()
+	props2.load(StringIO(str(props)))
+	assert props == props2
+
+
 def main():
 	for name, f in globals().items():
 		if name.startswith("test_") and callable(f):
