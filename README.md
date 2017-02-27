@@ -20,6 +20,12 @@ To install, preferably into a virtual environment:
  $ python setup.py install
 ```
 
+To test:
+
+```
+ $ python setup.py test
+```
+
 Usage
 -----
 
