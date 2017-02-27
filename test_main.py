@@ -142,6 +142,86 @@ def test_iterable_properties():
 	assert [key for key in props] == list(d.keys())
 
 
+def test_len():
+	items = [
+		("a", "b"),
+		("c", "d"),
+		("e", "f")
+	]
+	d = OrderedDict(items)
+	props = Properties(d)
+	assert len(props) == 3
+
+
+def test_empty_len():
+	props = Properties()
+	assert len(props) == 0
+
+	d = OrderedDict()
+	props = Properties(d)
+	assert len(props) == 0
+
+
+def test_equals():
+	items = [
+		("a", "b"),
+		("c", "d"),
+		("e", "f")
+	]
+	d = OrderedDict(items)
+	props = Properties(d)
+	assert props == Properties(d)
+
+
+def test_not_equals():
+	assert Properties(OrderedDict([
+		("a", "b"),
+		("c", "d"),
+		("e", "f")
+	])) != Properties(OrderedDict([
+		("c", "d"),
+		("e", "f")
+	]))
+
+
+def test_update():
+	"""test MutableMapping derived method"""
+	items = [
+		("a", "b"),
+		("c", "d"),
+		("e", "f")
+	]
+	d = OrderedDict(items)
+	props = Properties(d)
+	props.update({
+		"g": "h",
+		"c": "i"
+	})
+	assert props == Properties(OrderedDict([
+		("a", "b"),
+		("c", "i"),
+		("e", "f"),
+		("g", "h")
+	]))
+
+
+def test_delete():
+	items = [
+		("a", "b"),
+		("c", "d"),
+		("e", "f")
+	]
+	d = OrderedDict(items)
+	props = Properties(d)
+	del props["a"]
+
+	assert "a" not in props
+	assert props == Properties(OrderedDict([
+		("c", "d"),
+		("e", "f")
+	]))
+
+
 def main():
 	for name, f in globals().items():
 		if name.startswith("test_") and callable(f):

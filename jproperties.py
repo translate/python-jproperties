@@ -3,6 +3,7 @@ python-jproperties
 Java .properties file parsing and handling
 """
 from collections import OrderedDict
+from collections.abc import MutableMapping
 
 
 __version__ = "0.1"
@@ -39,7 +40,7 @@ class Property:
 		return "<Property %r %s %r>" % (self.key, self.separator, self.value)
 
 
-class Properties(object):
+class Properties(MutableMapping):
 	def __init__(self, defaults=None):
 		if defaults is not None:
 			self._props = defaults.copy()
@@ -72,9 +73,22 @@ class Properties(object):
 			self.nodes.append(Property(key, value))
 	setProperty = __setitem__
 
+	def __delitem__(self, key):
+		for node in self.nodes:
+			if isinstance(node, Property) and node.key == key:
+				del self.nodes[self.nodes.index(node)]
+		del self._props[key]
+	delProperty = __delitem__
+
 	def __iter__(self):
 		for key in self._props.keys():
 			yield key
+
+	def __len__(self):
+		return len(self._props.keys())
+
+	def __contains__(self, key):
+		return key in self._props
 
 	@staticmethod
 	def escape(value):
@@ -129,8 +143,6 @@ class Properties(object):
 
 			return line.lstrip()
 
-		key = []
-		value = []
 		buf = []
 		cont = False
 		for line in stream.readlines():
@@ -191,9 +203,6 @@ class Properties(object):
 		idx += len(sep)
 		value = getvalue(line[idx:])
 		return key, sep, value
-
-	def items(self):
-		return self._props.items()
 
 	def load(self, stream):
 		comment = []
