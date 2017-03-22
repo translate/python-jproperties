@@ -2,13 +2,12 @@
 python-jproperties
 Java .properties file parsing and handling
 """
+import pkg_resources
 from collections import OrderedDict
 from collections.abc import MutableMapping
 
 
-__version__ = "0.1"
-__author__ = "Jerome Leclanche"
-__email__ = "jerome@leclan.ch"
+__version__ = pkg_resources.require("jproperties")[0].version
 
 
 class EmptyNode:
