@@ -10,12 +10,3 @@ notifications:
   email:
     on_failure: always
     on_success: change
-  irc:
-    channels:
-      - "chat.freenode.net#pootle-dev"
-    use_notice: true
-    skip_join: true
-    on_failure: always
-    on_success: change
-    template:
-      - "%{repository_name}/%{branch} @ %{commit} : %{author} - %{message} %{build_url}"
