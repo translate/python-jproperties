@@ -1,10 +1,7 @@
-#!/usr/bin/env python
+import os
 from collections import OrderedDict
 from io import StringIO
-import os
 from tempfile import NamedTemporaryFile
-
-import pytest
 from jproperties import Properties
 
 
@@ -78,13 +75,13 @@ def test_dropped_escapes():
 	)
 
 
-fruits = r"""
-fruits                           apple, banana, pear, \
-                                 cantaloupe, watermelon, \
-                                 kiwi, mango
-""".strip()
-fruits_values = "apple, banana, pear, cantaloupe, watermelon, kiwi, mango"
 def test_java_examples():
+
+	fruits = r"""fruits                           apple, banana, pear, \
+	cantaloupe, watermelon, \
+	kiwi, mango"""
+	fruits_values = "apple, banana, pear, cantaloupe, watermelon, kiwi, mango"
+
 	_test_deserialize(
 		("Truth = Beauty", [("Truth", "Beauty")]),
 		(" Truth:Beauty", [("Truth", "Beauty")]),
@@ -258,16 +255,12 @@ def test_newline_at_EOF():
 	"""http://stackoverflow.com/a/729795"""
 	f = NamedTemporaryFile(delete=False)
 	prop = Properties(OrderedDict([
-		('a', 'b'),
-		('c', 'd'),
-		('e', 'f')
+		("a", "b"),
+		("c", "d"),
+		("e", "f")
 	]))
 	prop.save(f.name)
 	with open(f.name) as f:
 		lastline = f.readlines()[-1]
 	os.remove(f.name)
 	assert lastline.endswith("\n")
-
-
-if __name__ == "__main__":
-	pytest.main()

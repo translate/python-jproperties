@@ -1,11 +1,24 @@
 # https://travis-ci.org/translate/python-jproperties
 sudo: false
 language: python
-python:
-  - 3.5
+python: "3.6"
+
+env:
+  - TOXENV=py34
+  - TOXENV=py36
+  - TOXENV=flake8
+
+cache:
+  directories:
+    - $HOME/.cache/pip
+    - $TRAVIS_BUILD_DIR/.tox
+
+install:
+  - pip install tox
+
 script:
-  - ./setup.py install
-  - ./test_main.py
+  - tox
+
 notifications:
   email:
     on_failure: always
